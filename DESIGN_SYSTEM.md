@@ -81,6 +81,42 @@ Three animated green dots. Used in `AgentStatusBanner`.
 
 ---
 
+#### `<ProgressBar>`
+Horizontal loading bar with determinate and indeterminate states.
+```tsx
+<ProgressBar value={65} status="success" size="md" label="Uploading" showLabel />
+<ProgressBar status="loading" label="Fetching menu…" />  // indeterminate
+<ProgressBar value={30} status="error" size="lg" showLabel />
+```
+Props: `value` (0–100, omit for indeterminate) · `status` (`default` | `success` | `error` | `warning` | `info` | `loading`) · `size` (`sm` | `md` | `lg`) · `label` · `showLabel`
+
+State → color mapping mirrors the system tokens:
+| Status | Color |
+|---|---|
+| `default` | Gray |
+| `success` | `--food-primary` green |
+| `error` | `--food-error` red |
+| `warning` | `--food-warning` yellow |
+| `info` | `--food-info` blue |
+| `loading` | Animated green (indeterminate) |
+
+---
+
+#### `<ProgressCircle>`
+SVG circular progress indicator with determinate and indeterminate states.
+```tsx
+<ProgressCircle value={65} status="success" size="md" showValue />
+<ProgressCircle status="loading" size="lg" />  // spinning arc
+<ProgressCircle value={30} status="error" size="sm" />
+```
+Props: `value` (0–100, omit for indeterminate) · `status` (same 6 as `ProgressBar`) · `size` (`sm` | `md` | `lg`) · `strokeWidth` · `showValue`
+
+Sizes: `sm` = 32px · `md` = 48px · `lg` = 64px
+
+Preview all states at **[/loading](http://localhost:5173/loading)**.
+
+---
+
 #### `<Badge>`
 ```tsx
 <Badge variant="success">Order confirmed</Badge>

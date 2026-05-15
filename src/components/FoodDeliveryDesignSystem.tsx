@@ -87,6 +87,140 @@ export const DotLoader = ({ className = '' }: { className?: string }) => (
   </div>
 );
 
+// ProgressBar ─────────────────────────────────────────────────────────────────
+export type ProgressStatus = 'default' | 'success' | 'error' | 'warning' | 'info' | 'loading';
+
+export interface ProgressBarProps {
+  value?: number;
+  status?: ProgressStatus;
+  size?: 'sm' | 'md' | 'lg';
+  showLabel?: boolean;
+  label?: string;
+  className?: string;
+}
+export const ProgressBar = ({
+  value,
+  status = 'default',
+  size = 'md',
+  showLabel = false,
+  label,
+  className = '',
+}: ProgressBarProps) => {
+  const isIndeterminate = status === 'loading' || value === undefined;
+  const clampedValue = Math.min(100, Math.max(0, value ?? 0));
+  const heights = { sm: 'h-1', md: 'h-2', lg: 'h-3' };
+  const fills: Record<ProgressStatus, string> = {
+    default: 'bg-gray-400',
+    success: 'bg-green-500',
+    error: 'bg-red-500',
+    warning: 'bg-yellow-400',
+    info: 'bg-blue-500',
+    loading: 'bg-green-500',
+  };
+  return (
+    <div className={`flex flex-col gap-1.5 ${className}`}>
+      {(label || showLabel) && (
+        <div className="flex items-center justify-between">
+          {label && <span className="text-xs font-medium text-gray-600">{label}</span>}
+          {showLabel && !isIndeterminate && (
+            <span className="text-xs text-gray-500">{clampedValue}%</span>
+          )}
+        </div>
+      )}
+      <div className={`relative w-full overflow-hidden rounded-full bg-gray-100 ${heights[size]}`}>
+        {isIndeterminate ? (
+          <div className={`absolute top-0 h-full rounded-full ${fills[status]} food-progress-indeterminate`} />
+        ) : (
+          <div
+            className={`h-full rounded-full transition-all duration-500 ease-out ${fills[status]}`}
+            style={{ width: `${clampedValue}%` }}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
+
+// ProgressCircle ──────────────────────────────────────────────────────────────
+export interface ProgressCircleProps {
+  value?: number;
+  status?: ProgressStatus;
+  size?: 'sm' | 'md' | 'lg';
+  strokeWidth?: number;
+  showValue?: boolean;
+  className?: string;
+}
+export const ProgressCircle = ({
+  value,
+  status = 'default',
+  size = 'md',
+  strokeWidth,
+  showValue = false,
+  className = '',
+}: ProgressCircleProps) => {
+  const isIndeterminate = status === 'loading' || value === undefined;
+  const clampedValue = Math.min(100, Math.max(0, value ?? 0));
+  const dims = { sm: 32, md: 48, lg: 64 };
+  const defaultSW = { sm: 3, md: 4, lg: 5 };
+  const dim = dims[size];
+  const sw = strokeWidth ?? defaultSW[size];
+  const r = (dim - sw) / 2;
+  const circumference = 2 * Math.PI * r;
+  const offset = circumference - (clampedValue / 100) * circumference;
+  const strokes: Record<ProgressStatus, string> = {
+    default: '#9CA3AF',
+    success: '#22C55E',
+    error: '#EF4444',
+    warning: '#FACC15',
+    info: '#3B82F6',
+    loading: '#22C55E',
+  };
+  const textSizes = { sm: 'text-[8px]', md: 'text-[10px]', lg: 'text-xs' };
+  return (
+    <div
+      className={`relative inline-flex items-center justify-center ${className}`}
+      style={{ width: dim, height: dim }}
+      role="progressbar"
+      aria-valuenow={isIndeterminate ? undefined : clampedValue}
+      aria-valuemin={0}
+      aria-valuemax={100}
+    >
+      <svg
+        width={dim}
+        height={dim}
+        viewBox={`0 0 ${dim} ${dim}`}
+        className={isIndeterminate ? 'animate-spin' : '-rotate-90'}
+      >
+        <circle cx={dim / 2} cy={dim / 2} r={r} fill="none" stroke="#E5E7EB" strokeWidth={sw} />
+        <circle
+          cx={dim / 2}
+          cy={dim / 2}
+          r={r}
+          fill="none"
+          stroke={strokes[status]}
+          strokeWidth={sw}
+          strokeLinecap="round"
+          strokeDasharray={
+            isIndeterminate
+              ? `${circumference * 0.25} ${circumference * 0.75}`
+              : `${circumference} ${circumference}`
+          }
+          strokeDashoffset={isIndeterminate ? 0 : offset}
+          style={!isIndeterminate ? { transition: 'stroke-dashoffset 0.5s ease' } : undefined}
+        />
+      </svg>
+      {showValue && !isIndeterminate && (
+        <span
+          className={`absolute font-semibold text-gray-700 ${textSizes[size]}`}
+          style={{ fontFamily: 'var(--food-font)' }}
+        >
+          {clampedValue}%
+        </span>
+      )}
+    </div>
+  );
+};
+
 // CardSkeleton ────────────────────────────────────────────────────────────────
 export const CardSkeleton = ({ className = '' }: { className?: string }) => (
   <div className={`overflow-hidden rounded-2xl bg-white shadow-sm ${className}`}>

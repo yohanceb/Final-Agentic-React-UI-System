@@ -1,0 +1,488 @@
+/**
+ * Food Delivery Agentic Design System — Global Stylesheet
+ * Font: Helvetica Neue Normal
+ *
+ * Import this file once at your app root (e.g. main.tsx or App.tsx):
+ *   import './styles/food-delivery-design-system.css'
+ *
+ * Sections:
+ *  1. Design Tokens (CSS custom properties)
+ *  2. Base / Reset
+ *  3. Typography
+ *  4. Animations & Keyframes
+ *  5. Utility classes (supplement Tailwind where needed)
+ *  6. Component overrides
+ */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   1. DESIGN TOKENS
+   ───────────────────────────────────────────────────────────────────────────── */
+:root {
+  /* Font */
+  --food-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --food-font-weight-normal: 400;
+  --food-font-weight-medium: 500;
+  --food-font-weight-semibold: 600;
+  --food-font-weight-bold: 700;
+
+  /* Font sizes */
+  --food-text-xs: 0.75rem;    /* 12px */
+  --food-text-sm: 0.875rem;   /* 14px */
+  --food-text-base: 1rem;     /* 16px */
+  --food-text-lg: 1.125rem;   /* 18px */
+  --food-text-xl: 1.25rem;    /* 20px */
+  --food-text-2xl: 1.5rem;    /* 24px */
+  --food-text-3xl: 1.875rem;  /* 30px */
+
+  /* Brand colors */
+  --food-primary:        #22C55E;
+  --food-primary-light:  #4ADE80;
+  --food-primary-dark:   #16A34A;
+  --food-primary-darker: #15803D;
+
+  /* Secondary / accent */
+  --food-secondary:      #FACC15;
+  --food-secondary-dark: #F59E0B;
+
+  /* Semantic */
+  --food-success:  #22C55E;
+  --food-warning:  #FACC15;
+  --food-error:    #EF4444;
+  --food-error-dk: #DC2626;
+  --food-info:     #3B82F6;
+
+  /* Neutrals */
+  --food-neutral-50:  #FAFAFA;
+  --food-neutral-100: #F5F5F5;
+  --food-neutral-200: #EEEEEE;
+  --food-neutral-300: #E0E0E0;
+  --food-neutral-400: #BDBDBD;
+  --food-neutral-500: #9E9E9E;
+  --food-neutral-600: #757575;
+  --food-neutral-700: #616161;
+  --food-neutral-800: #424242;
+  --food-neutral-900: #212121;
+
+  /* Surfaces */
+  --food-surface-glass:       rgba(255, 255, 255, 0.70);
+  --food-surface-glass-hover: rgba(255, 255, 255, 0.85);
+  --food-surface-glass-dark:  rgba(33, 33, 33, 0.10);
+  --food-bg-app:              #F0FDF4; /* Soft green-tinted page background */
+
+  /* Spacing scale */
+  --food-space-1:  0.25rem;   /* 4px  */
+  --food-space-2:  0.5rem;    /* 8px  */
+  --food-space-3:  0.75rem;   /* 12px */
+  --food-space-4:  1rem;      /* 16px */
+  --food-space-5:  1.25rem;   /* 20px */
+  --food-space-6:  1.5rem;    /* 24px */
+  --food-space-8:  2rem;      /* 32px */
+  --food-space-10: 2.5rem;    /* 40px */
+  --food-space-12: 3rem;      /* 48px */
+
+  /* Border radius */
+  --food-radius-sm:   0.375rem;   /* 6px  */
+  --food-radius-md:   0.5rem;     /* 8px  */
+  --food-radius-lg:   0.75rem;    /* 12px */
+  --food-radius-xl:   1rem;       /* 16px */
+  --food-radius-2xl:  1.5rem;     /* 24px */
+  --food-radius-3xl:  1.875rem;   /* 30px */
+  --food-radius-full: 9999px;
+
+  /* Shadows */
+  --food-shadow-xs:    0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --food-shadow-sm:    0 1px 3px 0 rgba(0, 0, 0, 0.08),
+                       0 1px 2px -1px rgba(0, 0, 0, 0.08);
+  --food-shadow-md:    0 4px 6px -1px rgba(0, 0, 0, 0.10),
+                       0 2px 4px -2px rgba(0, 0, 0, 0.10);
+  --food-shadow-lg:    0 10px 15px -3px rgba(0, 0, 0, 0.10),
+                       0 4px 6px -4px rgba(0, 0, 0, 0.10);
+  --food-shadow-xl:    0 20px 25px -5px rgba(0, 0, 0, 0.10),
+                       0 8px 10px -6px rgba(0, 0, 0, 0.10);
+  --food-shadow-green: 0 18px 40px -20px rgba(16, 185, 129, 0.90);
+  --food-shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+
+  /* Transitions */
+  --food-transition-fast:   150ms ease;
+  --food-transition-normal: 200ms ease;
+  --food-transition-slow:   300ms ease;
+
+  /* Z-index layers */
+  --food-z-base:    0;
+  --food-z-raised:  10;
+  --food-z-overlay: 100;
+  --food-z-modal:   200;
+  --food-z-toast:   300;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   2. BASE / RESET
+   ───────────────────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
+  font-family: var(--food-font);
+  font-weight: var(--food-font-weight-normal);
+  background-color: var(--food-bg-app);
+  color: var(--food-neutral-900);
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove default button styles */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Remove default input styles */
+input,
+textarea {
+  font-family: inherit;
+  outline: none;
+}
+
+/* Images */
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   3. TYPOGRAPHY
+   ───────────────────────────────────────────────────────────────────────────── */
+.food-heading-1 {
+  font-family: var(--food-font);
+  font-size: var(--food-text-3xl);
+  font-weight: var(--food-font-weight-bold);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--food-neutral-900);
+}
+
+.food-heading-2 {
+  font-family: var(--food-font);
+  font-size: var(--food-text-2xl);
+  font-weight: var(--food-font-weight-bold);
+  line-height: 1.3;
+  color: var(--food-neutral-900);
+}
+
+.food-heading-3 {
+  font-family: var(--food-font);
+  font-size: var(--food-text-xl);
+  font-weight: var(--food-font-weight-semibold);
+  line-height: 1.4;
+  color: var(--food-neutral-900);
+}
+
+.food-body {
+  font-family: var(--food-font);
+  font-size: var(--food-text-base);
+  font-weight: var(--food-font-weight-normal);
+  line-height: 1.6;
+  color: var(--food-neutral-800);
+}
+
+.food-body-sm {
+  font-family: var(--food-font);
+  font-size: var(--food-text-sm);
+  font-weight: var(--food-font-weight-normal);
+  line-height: 1.5;
+  color: var(--food-neutral-700);
+}
+
+.food-caption {
+  font-family: var(--food-font);
+  font-size: var(--food-text-xs);
+  font-weight: var(--food-font-weight-normal);
+  line-height: 1.4;
+  color: var(--food-neutral-500);
+}
+
+.food-label {
+  font-family: var(--food-font);
+  font-size: var(--food-text-sm);
+  font-weight: var(--food-font-weight-medium);
+  color: var(--food-neutral-700);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   4. ANIMATIONS & KEYFRAMES
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Shimmer — used by SkeletonLoader suggested state in CategoryPill */
+@keyframes food-shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.food-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.food-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: food-shimmer 1.8s infinite;
+}
+
+/* Pulse gradient — agent-thinking button */
+@keyframes food-pulse-gradient {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+
+.food-agent-thinking {
+  background: linear-gradient(
+    90deg,
+    var(--food-primary) 0%,
+    var(--food-primary-light) 50%,
+    var(--food-primary) 100%
+  );
+  background-size: 200% 200%;
+  animation: food-pulse-gradient 2s ease infinite;
+}
+
+/* Bounce — DotLoader dots */
+@keyframes food-bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+
+.food-dot-bounce {
+  animation: food-bounce 0.8s ease-in-out infinite;
+}
+
+/* Float — decorative product images */
+@keyframes food-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+.food-float {
+  animation: food-float 3s ease-in-out infinite;
+}
+
+/* Slide up — bottom sheet, toast, CartBar entry */
+@keyframes food-slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.food-slide-up {
+  animation: food-slide-up 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Fade in */
+@keyframes food-fade-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.food-fade-in {
+  animation: food-fade-in 0.2s ease forwards;
+}
+
+/* Scale pop — success / confirmed state */
+@keyframes food-scale-pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+.food-scale-pop {
+  animation: food-scale-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   5. UTILITY CLASSES
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Glass surface */
+.food-glass {
+  background: var(--food-surface-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Safe area padding for mobile (bottom nav, CTA bar) */
+.food-safe-bottom {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+.food-safe-top {
+  padding-top: max(1rem, env(safe-area-inset-top));
+}
+
+/* Horizontal scroll snap (category row, staff picks) */
+.food-scroll-x {
+  display: flex;
+  gap: var(--food-space-3);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;        /* Firefox */
+}
+
+.food-scroll-x::-webkit-scrollbar {
+  display: none;                /* Chrome / Safari */
+}
+
+.food-scroll-x > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* Line clamp helpers */
+.food-line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.food-line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Focus visible ring — consistent across all interactive elements */
+.food-focus-ring:focus-visible {
+  outline: 2px solid var(--food-primary);
+  outline-offset: 2px;
+}
+
+/* Page shell */
+.food-page {
+  min-height: 100dvh;
+  background-color: var(--food-bg-app);
+  font-family: var(--food-font);
+  max-width: 430px;    /* mobile-first, centered on desktop */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   6. COMPONENT OVERRIDES
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* BottomNavBar — stick to bottom */
+.food-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  z-index: var(--food-z-overlay);
+}
+
+/* CartBar — stick above bottom nav */
+.food-cart-bar {
+  position: fixed;
+  bottom: calc(64px + max(0px, env(safe-area-inset-bottom)));
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 2rem);
+  max-width: 398px;
+  z-index: var(--food-z-overlay);
+}
+
+/* Toast container */
+.food-toast-container {
+  position: fixed;
+  top: max(1rem, env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 2rem);
+  max-width: 398px;
+  z-index: var(--food-z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--food-space-2);
+}
+
+/* Topping / Size selector — horizontal scroll on small screens */
+.food-topping-row {
+  display: flex;
+  gap: var(--food-space-3);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.food-topping-row::-webkit-scrollbar {
+  display: none;
+}
+
+/* Category pill row */
+.food-category-row {
+  display: flex;
+  gap: var(--food-space-4);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: var(--food-space-1);
+}
+
+.food-category-row::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hero order card gradient overlay (image left edge) */
+.food-hero-card-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(34, 197, 94, 0.95) 0%,
+    rgba(34, 197, 94, 0.7) 60%,
+    transparent 100%
+  );
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Product image floating container */
+.food-product-image-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 220px;
+  overflow: visible;
+}
+
+.food-product-image-wrap img {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: var(--food-shadow-xl);
+}

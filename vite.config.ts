@@ -2,7 +2,8 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
+  base: command === 'serve' ? '/' : '/Final-Agentic-React-UI-System/',
   plugins: [react()],
   resolve: {
     alias: {
@@ -13,4 +14,4 @@ export default defineConfig({
       '@hooks': path.resolve(__dirname, './src/hooks'),
     },
   },
-});
+}));

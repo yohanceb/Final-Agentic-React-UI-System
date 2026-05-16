@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import RestaurantPage from './pages/RestaurantPage';
 import ProductDetailPage from './pages/ProductDetailPage';
@@ -8,7 +8,7 @@ import OrderButtonShowcase from './examples/OrderButtonShowcase';
 import ProgressShowcase from './examples/ProgressShowcase';
 import DesignSystemHub from './examples/DesignSystemHub';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   // Food app
   { path: '/',              element: <HomePage /> },
   { path: '/restaurant/:id', element: <RestaurantPage /> },
